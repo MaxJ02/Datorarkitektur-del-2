@@ -1,0 +1,21 @@
+Datorarkitektur – Del II
+
+
+1. Förklara skillnaden mellan I-instruktioner (immediate) samt R-instruktioner (register). Förklara skillnaden mellan OR samt
+ORI, både via assemblerkod samt på hårdvarunivå (gärna via pseudokod i C). Via detta, förklara varför det hårdvarumässigt
+är nödvändigt att implementera separata I- och R-instruktioner för olika instruktioner.
+
+
+2. Förklara vad som händer vid ett villkorslöst programhopp via instruktionen JMP, exempelvis
+JMP 0x20
+Vad är det som medför att programmet ”hoppar” till adressen 0x10 i detta fall? Förklara med nyckelord såsom OP-kod,
+operand samt programräknare. Visa vad som sker via pseudokod i C/C++.
+
+
+3. Förklara vad cacheminne är, vad syfte med cacheminne är samt när det är fördelaktigt att använda. Ange också varför
+kombinationen av en stor andel externt RAM-minne samt en mindre del cacheminne ofta föredras framför att enbart
+använda en stor andel cacheminne.
+
+
+4. Förklara vad som menas med pipelining och hur det kan öka genomströmningen av exekverade instruktioner. Förklara
+också vad som sker vid pipelining när en hoppinstruktion genomförs och varför.
