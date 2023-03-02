@@ -6,6 +6,10 @@ ORI, både via assemblerkod samt på hårdvarunivå (gärna via pseudokod i C). 
 är nödvändigt att implementera separata I- och R-instruktioner för olika instruktioner.
 
 
+
+
+
+
 2. Förklara vad som händer vid ett villkorslöst programhopp via instruktionen JMP, exempelvis
 JMP 0x20
 Vad är det som medför att programmet ”hoppar” till adressen 0x10 i detta fall? Förklara med nyckelord såsom OP-kod,
