@@ -1,0 +1,12 @@
+VG-uppgifter
+
+5. Du har följande instruktion innehållande villkorsoperatorn i C:
+const uint8_t z = x > y ? x - y : x + y;
+a) Ersätt villkorsoperatorn ovan med en if-else sats.
+b) Översätt C-koden i a) till assemblerkod i AVR-assembler.
+6. Förklara detaljerat vad som sker på hårdvarunivå när nedanstående instruktioner exekverar.
+CPI R16, 0x01
+BREQ 0x10
+JMP 0x20
+Visa med pseudokod i C/C++ hur ALU:n arbetar, hur statusbitar NZVC uppdateras efter resultatet, hur statusbitarna
+används för efterföljande villkorliga hoppinstruktion samt hur hoppen i fråga sker.
