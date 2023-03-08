@@ -5,8 +5,37 @@ Datorarkitektur – Del II
 ORI, både via assemblerkod samt på hårdvarunivå (gärna via pseudokod i C). Via detta, förklara varför det hårdvarumässigt
 är nödvändigt att implementera separata I- och R-instruktioner för olika instruktioner.
 
+Svar: 
+Den största skillnaden mellan I- och R-instruktioner är att I-instruktioner använder omedelbar data medan R-instruktioner använder registerdata. 
+Detta innebär att I-instruktioner kan användas för operationer som kräver ett konstant eller bokstavligt värde, som att initiera ett register eller 
+lägga till ett fast värde till ett register. R-instruktioner används dock istället för operationer som kräver att innehållet i ett register används,
+såsom aritmetiska operationer eller dataöverföringar mellan register.
 
 
+OR är en instruktion av R-typen (register) som utför en bitvis OR-operation mellan två register, 
+medans ORI är en instruktion av I-typen (immediate) som utför en bitvis OR-operation mellan ett register och ett "immediate" värde.
+
+Assemblerkod som visar skillnaden:
+OR R16, R17    ; Utför en bitvis OR mellan R16 och R17, för att sedan spara resultatet i R16.
+ORI R24, 0x24  ; Utför en bitvis OR mellan R16 och 0x24, sparar sedan resultatet i R24
+
+Pseudokod i C
+
+uint8_t or(uint8_t a, uint8_t b) 
+{
+    return a | b;
+}
+
+samt
+
+uint8_t ori(uint8_t a, uint8_t immediate) 
+{
+    return a | immediate;
+}
+
+Anledningen till att det är nödvändigt att implementera separata I- och R-instruktioner för olika operationer i Assembler är att olika 
+instruktioner kräver olika typer av operander. Detta möjliggör även mer effektiv och streamlinad bearbetning på hårdvarunivå,
+eftersom instruktioner av R-typen går snabbare för hårdvaran att utföra än instruktioner av I-typen.
 
 
 
@@ -14,6 +43,10 @@ ORI, både via assemblerkod samt på hårdvarunivå (gärna via pseudokod i C). 
 JMP 0x20
 Vad är det som medför att programmet ”hoppar” till adressen 0x10 i detta fall? Förklara med nyckelord såsom OP-kod,
 operand samt programräknare. Visa vad som sker via pseudokod i C/C++.
+
+
+
+
 
 
 3. Förklara vad cacheminne är, vad syfte med cacheminne är samt när det är fördelaktigt att använda. Ange också varför
