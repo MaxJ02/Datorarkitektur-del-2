@@ -3,7 +3,35 @@ VG-uppgifter
 5. Du har följande instruktion innehållande villkorsoperatorn i C:
 const uint8_t z = x > y ? x - y : x + y;
 a) Ersätt villkorsoperatorn ovan med en if-else sats.
+
+const uint8_t z;
+if (x > y) 
+{
+    z = x - y;
+} 
+else 
+{
+    z = x + y;
+}
+
 b) Översätt C-koden i a) till assemblerkod i AVR-assembler.
+
+LDI R16, x        ; Laddar in x i R16
+LDI R17, y        ; Laddar in y i R17
+
+CP R16, R17       ; Jämför x och y
+BRCS subtract     ; Branch till subtract om x är större än y
+
+ADD R18, R16, R17 ; z = x + y
+RJMP main_loop         ; Hoppa till main_loop
+
+subtract:
+  SUB R18, R16, R17 ; z = x - y
+
+main_loop:
+   RJMP main_loop
+
+
 6. Förklara detaljerat vad som sker på hårdvarunivå när nedanstående instruktioner exekverar.
 CPI R16, 0x01
 BREQ 0x10
