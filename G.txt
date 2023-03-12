@@ -41,13 +41,14 @@ eftersom instruktioner av R-typen går snabbare för hårdvaran att utföra än 
 
 2. Förklara vad som händer vid ett villkorslöst programhopp via instruktionen JMP, exempelvis
 JMP 0x20
-Vad är det som medför att programmet ”hoppar” till adressen 0x10 i detta fall? Förklara med nyckelord såsom OP-kod,
+Vad är det som medför att programmet ”hoppar” till adressen 0x20 i detta fall? Förklara med nyckelord såsom OP-kod,
 operand samt programräknare. Visa vad som sker via pseudokod i C/C++.
 
 När AVR-processorn stöter på en JMP-instruktion med en operand av 0x20 hoppar den till adressen 0x20 i minnet. Denna instruktion består av en OP-kod på en byte 
 följt av en operand med två byte, som är måladressen som skall hoppas till. Processorn hämtar opcode och operand från minnet, uppdaterar programräknaren till värdet på operanden och fortsätter körningen på den nya adressen som anges av operanden.
 
 Pseudokod för detta är något sådant här:
+
 
 
 
