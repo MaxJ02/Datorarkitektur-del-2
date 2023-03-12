@@ -44,12 +44,33 @@ JMP 0x20
 Vad är det som medför att programmet ”hoppar” till adressen 0x20 i detta fall? Förklara med nyckelord såsom OP-kod,
 operand samt programräknare. Visa vad som sker via pseudokod i C/C++.
 
-När AVR-processorn stöter på en JMP-instruktion med en operand av 0x20 hoppar den till adressen 0x20 i minnet. Denna instruktion består av en OP-kod på en byte 
-följt av en operand med två byte, som är måladressen som skall hoppas till. Processorn hämtar opcode och operand från minnet, uppdaterar programräknaren till värdet på operanden och fortsätter körningen på den nya adressen som anges av operanden.
+När AVR-processorn stöter på en JMP-instruktion med operanden 0x20 "hoppar" den till adressen 0x20 i minnet genom att processorn hämtar OP-koden och 
+operanden från minnet, uppdaterar programräknaren till värdet på operanden (i detta fallet 0x20) och fortsätter körningen på den nya adressen som anges av operanden. Det är detta vi kallar för ett "hopp"
 
-Pseudokod för detta är något sådant här:
+Pseudokod för detta i c++ är något sådant här:
 
+// funktion på address 0x20
+void samplefunctionat0x20() 
+{
+    std::cout << "Hello world";
+}
 
+int main() 
+{
+    // 0x12 är en address vald på måfå, den faktiska addressen går inte att veta.
+    int pc = 0x12;
+
+    // Exekvera JMP instruktionen genom att sätta pc till operanden
+    pc = 0x20;
+
+    // Gör om funktionspekaren till korrekt datatyp (hoppas jag)
+    void (*funcPtr)() = (void (*)())(pc);
+
+    // anroppa funktionen på address 0x20
+    funcPtr();
+
+    return 0;
+}
 
 
 
