@@ -33,8 +33,68 @@ main_loop:
 
 
 6. Förklara detaljerat vad som sker på hårdvarunivå när nedanstående instruktioner exekverar.
+
 CPI R16, 0x01
+
+Denna instruktionen jämför värdet i register R16 med det omedelbara värdet 0x01, sedan sätter den på rätt flagga i SREG.
+Jämförelsen görs genom att subtrahera 0x01 från värdet i R16, utan att spara resultatet. N flaggan i SREG sätts på om resultatet är negativt, och Z flaggan
+sätts på om resultatet är 0. C flaggan sätts på om det inte sker en "borrow" från den mest signifikanta biten. 
+
+
 BREQ 0x10
+
+Instruktionen BREQ testar Z flaggan i SREG och "branchar" till en relativ address (anges som ett 7-bitars immediate värde för två komplementet) om det är inställt. I det här fallet är branch målet 0x10 (16 decimalt.)
+
+Om Z flaggan är satt så uppdateras programräknaren (pc) till att peka på addressen där instruktionen för branch "målet" ligger. Annars inkrementeras programräknaren till att peka på nästa instruktion. 
+
 JMP 0x20
+
+JMP instruktionen hoppar ovillkorligt till en specifierad address. I detta fallet är målet 0x20 (32 decimalt). AVR mikrokontrollern updaterar programräknaren till att peka på instruktionen som den ska hoppa till. Detta sker oavsett vad som skedde innan. 
+
+Sammanfattat vad alla tre instruktioner gör tillsammans:
+
+Om värdet i R16 är lika med 0x01, så hoppar mikrokontrollen till address 0x10 och exekverar instruktionen som ligger där. Annars fortsätter den nedåt i koden, exekverar nästa instruktion vilket är att hoppa till addressen 0x20. 
+
+
+
 Visa med pseudokod i C/C++ hur ALU:n arbetar, hur statusbitar NZVC uppdateras efter resultatet, hur statusbitarna
 används för efterföljande villkorliga hoppinstruktion samt hur hoppen i fråga sker.
+
+#include <stdint.h>
+#include <stdbool.h>
+
+typedef struct 
+{
+    uint16_t result;
+    bool n, z, v, c;
+} 
+alu_result;
+
+alu_result alu(uint8_t op1, uint8_t op2, uint8_t opcode) 
+{
+    uint16_t result;
+    bool n, z, v, c;
+    
+    switch(opcode) 
+    {
+            case 0:     // ADD
+            result = op1 + op2;
+            n = (result & 0x80);
+            z = (result == 0);
+            v = (((op1 & 0x80) == (op2 & 0x80)) && ((op1 & 0x80) != (result & 0x80)));
+            c = ((result < op1) || (result < op2));
+            break;
+            case 2:     // SUB
+            result = op1 - op2;
+            n = (result & 0x80);
+            z = (result == 0);
+            v = (((op1 & 0x80) != (op2 & 0x80)) && ((op1 & 0x80) != (result & 0x80)));
+            c = (op2 > op1);
+            break;
+        default:
+            break;
+    }
+    
+    alu_result result_struct = { result, n, z, v, c };
+    return result_struct;
+}
